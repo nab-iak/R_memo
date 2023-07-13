@@ -76,3 +76,49 @@ dt_longer2 <- dt_wider2 %>%
 dt_longer2
 ```
 
+replace all NA in dt_wider2 into 0
+```{r}
+dt_wider2_na.rm <- dt_wider2 %>%
+                        mutate_all(~replace_na(.,0)) %>%
+                        arrange(Model,Task)
+dt_wider2_na.rm
+```
+
+mutate a column meaning transformer in 2018 and 2019
+```{r}
+dt_wider2_na.rm %>%
+            select(-c("LSTM_2017","LSTM_2018")) %>%
+            mutate(
+              across(
+                contains("_2018"), 
+                 ~ (. + get(sub("_2018", "_2019", cur_column())))/2, 
+                .names = "{.col}_mean")
+              ) %>%
+            rename_with(
+              ~ gsub("_2018_mean", "_mean", .), 
+              contains("_2018_mean")
+              ) %>%
+            arrange(Model,Task)
+```
+
+another way to calculate mean by group_by()
+```{r}
+dt_wider2_na.rm_2 <- dt_wider2_na.rm %>%
+                          select(-c(LSTM_2017, LSTM_2018)) %>%
+                          pivot_longer(
+                            cols = matches("_"),
+                            names_to = c("Encode","Year"),
+                            names_pattern = "(.*)_(.*)",
+                            values_to = "Score"
+                          ) 
+dt_wider2_na.rm_2
+dt_wider2_na.rm_2 %>%
+  group_by(Model,Task,Encode) %>%
+  summarize(
+    mean_Score = mean(Score)
+  ) 
+```
+
+
+
+
