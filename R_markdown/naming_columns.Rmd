@@ -1,4 +1,4 @@
-library package and import data
+- library package and import data
 ```{r}
 library(tidyverse)
 dt <- read.csv("~/PycharmProjects/R_memo/data/glue.csv")
