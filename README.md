@@ -5,6 +5,6 @@
 简单的练习数据集  
 从这里[seaborn-data](https://github.com/mwaskom/seaborn-data)搞来的  
 
-## /memo
+## /R_markdown
 简单的笔记  
 .rmd格式
