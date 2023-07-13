@@ -1,13 +1,13 @@
-加???包和数据
+library package and import data
 ```{r}
 library(tidyverse)
-dt <- read.csv("?/PycharmProjects/R_memo/data/glue.csv")
+dt <- read.csv("~/PycharmProjects/R_memo/data/glue.csv")
 dt <- dt %>%
   arrange(Model)
 dt
 ```
 
-?????????
+wider the dataset
 ```{r}
 dt_wider1 <- dt %>%
                 pivot_wider(
@@ -18,36 +18,39 @@ dt_wider1 <- dt %>%
                 )
 dt_wider1
 ```
-???成原来的???子
-由于???原的???候不是???一列都包含???的，例如出???了没有的年???
-因此注意用na.omit()清除一下
+
+restore the widerred dataset
+while widering, some column with non-exist data(NA) will alse be included, 
+so na.omit NAs to restore dataset
 ```{r}
 dt_longer1 <- dt_wider1 %>%
                   pivot_longer(
                     cols = matches("_"),
                     names_to = c("Task","Encoder","Year"),
-                    names_pattern = "(.*)_(.*)_(.*)",
+                    names_pattern = "(.*)_(.*)_(.*)", # pattern order is -> "Task","Encoder","Year"
                     values_to = "Score"
-                  )
-
+                  ) %>%
+                  arrange(Model) %>%
+                  na.omit()
 dt_longer1
 ```
 
-保留Task的分???到列
+store the items of Task as columns
 ```{r}
 dt_longer1_2 <- dt_wider1 %>%
                   pivot_longer(
                     cols = matches("_"),
                     names_to = c(".value","Encoder","Year"),
-                    names_pattern = "(.*)_(.*)_(.*)",
-                    values_to = "Score"
+                    names_pattern = "(.*)_(.*)_(.*)"
+                    # values_to = "Score" # The items of the task will be stored in the column 
+                                          # so there is no need to create a column name for the score
                   ) %>%
                   arrange(Model) %>%
                   na.omit()
 dt_longer1_2
 ```
 
-只把???个??????
+wider two columns only
 ```{r}
 dt_wider2 <- dt %>%
                 pivot_wider(
@@ -59,7 +62,7 @@ dt_wider2 <- dt %>%
 dt_wider2
 ```
 
-
+restore the wriderred dataset
 ```{r}
 dt_longer2 <- dt_wider2 %>%
                   pivot_longer(
