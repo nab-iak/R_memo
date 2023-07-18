@@ -1,7 +1,7 @@
 $$ 
-  X+2Y \leq 16??
-  2X+3Y \leq 9??
-  X+Y \leq 8??
+  X+2Y \leq 16\\
+  2X+3Y \leq 9\\
+  X+Y \leq 8\\
   find \ out\ max(5X+7Y)\
 $$
 
