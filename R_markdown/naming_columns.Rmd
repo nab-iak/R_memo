@@ -1,13 +1,14 @@
-library package and import data
+读取数据集
 ```{r}
 library(tidyverse)
-dt <- read.csv("~/PycharmProjects/R_memo/data/glue.csv")
+getwd()
+dt <- read.csv(file.path(getwd()%>%dirname(),"data/glue.csv"))
 dt <- dt %>%
   arrange(Model)
 dt
 ```
 
-wider the dataset
+转变为宽数据集
 ```{r}
 dt_wider1 <- dt %>%
                 pivot_wider(
@@ -19,9 +20,10 @@ dt_wider1 <- dt %>%
 dt_wider1
 ```
 
-restore the widerred dataset
-while widering, some column with non-exist data(NA) will alse be included, 
-so na.omit NAs to restore dataset
+将宽数据集变为长数据集：
+在变宽厚，有一些行的变量为NA，这是由于本身没有这个数据的原因
+因此在恢复为长数据框时这些NA会被保留
+因此需要na.omit掉
 ```{r}
 dt_longer1 <- dt_wider1 %>%
                   pivot_longer(
@@ -35,22 +37,21 @@ dt_longer1 <- dt_wider1 %>%
 dt_longer1
 ```
 
-store the items of Task as columns
+将Task中的各个变量储存为各自的列表
 ```{r}
 dt_longer1_2 <- dt_wider1 %>%
                   pivot_longer(
                     cols = matches("_"),
                     names_to = c(".value","Encoder","Year"),
                     names_pattern = "(.*)_(.*)_(.*)"
-                    # values_to = "Score" # The items of the task will be stored in the column 
-                                          # so there is no need to create a column name for the score
+                    # values_to = "Score" # 因为各个Task会作为列保存，Score作为value分布储存在各列中，因此无需明明Score的列名
                   ) %>%
                   arrange(Model) %>%
                   na.omit()
 dt_longer1_2
 ```
 
-wider two columns only
+只变宽两列
 ```{r}
 dt_wider2 <- dt %>%
                 pivot_wider(
@@ -62,7 +63,7 @@ dt_wider2 <- dt %>%
 dt_wider2
 ```
 
-restore the wriderred dataset
+将dt_wider2复原为长列表
 ```{r}
 dt_longer2 <- dt_wider2 %>%
                   pivot_longer(
@@ -76,7 +77,7 @@ dt_longer2 <- dt_wider2 %>%
 dt_longer2
 ```
 
-replace all NA in dt_wider2 into 0
+将所有的NA替换为0
 ```{r}
 dt_wider2_na.rm <- dt_wider2 %>%
                         mutate_all(~replace_na(.,0)) %>%
@@ -84,7 +85,7 @@ dt_wider2_na.rm <- dt_wider2 %>%
 dt_wider2_na.rm
 ```
 
-mutate a column meaning transformer in 2018 and 2019
+生成一个2018与2019年的平均值的列
 ```{r}
 dt_wider2_na.rm %>%
             select(-c("LSTM_2017","LSTM_2018")) %>%
@@ -101,7 +102,7 @@ dt_wider2_na.rm %>%
             arrange(Model,Task)
 ```
 
-another way to calculate mean by group_by()
+另一种生成平均值列的方法
 ```{r}
 dt_wider2_na.rm_2 <- dt_wider2_na.rm %>%
                           select(-c(LSTM_2017, LSTM_2018)) %>%
