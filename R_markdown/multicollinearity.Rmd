@@ -2,36 +2,42 @@
 
 ```{r}
 tb1 <- tibble::tibble(x=1:100,y=1:100,z=201:300)
-cor(tb1)
+cor(tb1,method = "spearman")
+ggcorrplot::ggcorrplot(cor(tb1,method = "spearman"))
 lm(z~x+y,tb1) |> summary()
 ```
 
 ```{r}
 tb2 <- tibble::tibble(x=1:100,y=100:1,z=201:300)
-cor(tb2)
+cor(tb2,method = "spearman")
+ggcorrplot::ggcorrplot(cor(tb2,method = "spearman"))
 lm(z~x+y,tb2) |> summary()
 ```
 
 ```{r}
 tb3 <- tibble::tibble(x=1:100,y=c(1:50,50:1),z=201:300)
-cor(tb3)
+cor(tb3,method = "spearman")
+ggcorrplot::ggcorrplot(cor(tb3,method = "spearman"))
 lm(z~x+y,tb3) |> summary()
 ```
 
 ```{r}
 tb4 <- tibble::tibble(x=1:100,y1=c(1:50,50:1),y2=1:100,z=201:300)
-cor(tb4)
+cor(tb4,method = "spearman")
+ggcorrplot::ggcorrplot(cor(tb4,method = "spearman"))
 lm(z~x+y1+y2,tb4) |> summary()
 ```
 
 ```{r}
 tb5 <- tibble::tibble(x=1:100,y1=c(1:50,50:1),y2=100:1,z=201:300)
-cor(tb5)
+cor(tb5,method = "spearman")
+ggcorrplot::ggcorrplot(cor(tb5,method = "spearman"))
 lm(z~x+y1+y2,tb4) |> summary()
 ```
 
 ```{r}
 tb6 <- tibble::tibble(x=1:100,y1=c(1:50,50:1),y2=c(1:50,50:1),z=201:300)
-cor(tb6)
+cor(tb6,method = "spearman")
+ggcorrplot::ggcorrplot(cor(tb6,method = "spearman"))
 lm(z~x+y1+y2,tb4) |> summary()
 ```
