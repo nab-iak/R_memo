@@ -1,0 +1,31 @@
+几种不同情况下的共线性发生的例子
+
+```{r}
+tb1 <- tibble::tibble(x=1:100,y=1:100,z=201:300)
+lm(z~x+y,tb1) |> summary()
+```
+
+```{r}
+tb2 <- tibble::tibble(x=1:100,y=1:100,z=201:300)
+lm(z~x+y,tb2) |> summary()
+```
+
+```{r}
+tb3 <- tibble::tibble(x=1:100,y=c(1:50,100:51),z=201:300)
+lm(z~x+y,tb3) |> summary()
+```
+
+```{r}
+tb4 <- tibble::tibble(x=1:100,y1=c(1:50,100:51),y2=1:100,z=201:300)
+lm(z~x+y1+y2,tb4) |> summary()
+```
+
+```{r}
+tb5 <- tibble::tibble(x=1:100,y1=c(1:50,100:51),y2=100:1,z=201:300)
+lm(z~x+y1+y2,tb4) |> summary()
+```
+
+```{r}
+tb6 <- tibble::tibble(x=1:100,y1=c(1:50,100:51),y2=c(1:50,100:51),z=201:300)
+lm(z~x+y1+y2,tb4) |> summary()
+```
