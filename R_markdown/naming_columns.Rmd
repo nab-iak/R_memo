@@ -1,7 +1,6 @@
 读取数据集
 ```{r}
 library(tidyverse)
-getwd()
 dt <- read.csv(file.path(getwd()%>%dirname(),"data/glue.csv"))
 dt <- dt %>%
   arrange(Model)

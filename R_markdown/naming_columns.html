@@ -364,8 +364,6 @@ display: none;
 ## ✖ dplyr::filter() masks stats::filter()
 ## ✖ dplyr::lag()    masks stats::lag()
 ## ℹ Use the conflicted package (&lt;http://conflicted.r-lib.org/&gt;) to force all conflicts to become errors</code></pre>
-<pre class="r"><code>getwd()</code></pre>
-<pre><code>## [1] &quot;/Users/wanjiawei/PycharmProjects/R_memo/R_markdown&quot;</code></pre>
 <pre class="r"><code>dt &lt;- read.csv(file.path(getwd()%&gt;%dirname(),&quot;data/glue.csv&quot;))
 dt &lt;- dt %&gt;%
   arrange(Model)
