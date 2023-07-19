@@ -1,11 +1,12 @@
 几种不同情况下的共线性发生的例子
 
+vif在完全存在共线性的时候会报错
+`warning: essentially perfect fit: summary may be unreliable`
 ```{r}
 tb1 <- tibble::tibble(x=1:100,y=1:100,z=201:300)
 cor(tb1,method = "spearman")
 ggcorrplot::ggcorrplot(cor(tb1,method = "spearman"))
 lm(z~x+y,tb1) |> summary()
-lm(z~x+y,tb1) |> car::vif()
 ```
 
 ```{r}
@@ -28,7 +29,6 @@ tb4 <- tibble::tibble(x=1:100,y1=c(1:50,50:1),y2=1:100,z=201:300)
 cor(tb4,method = "spearman")
 ggcorrplot::ggcorrplot(cor(tb4,method = "spearman"))
 lm(z~x+y1+y2,tb4) |> summary()
-lm(z~x+y1+y2,tb4) |> car::vif()
 ```
 
 ```{r}
@@ -74,6 +74,7 @@ plot2 <- ggplot(mtcars) + geom_point(aes(hp,qsec))
 plot3 <- ggplot(mtcars) + geom_point(aes(mpg,qsec)) 
 cowplot::plot_grid(plot1,plot2,plot3,nrow=2)
 ```
+
 看看存在一定共线性的模型拟合情况
 ```{r}
 plot(lm(qsec~drat+hp+disp+mpg,mtcars))
@@ -90,8 +91,9 @@ plot(lm(qsec~drat+hp+mpg,mtcars))
 lm(qsec~hp+mpg,mtcars) |> summary()
 plot(lm(qsec~hp+mpg,mtcars))
 ```
+
 只保留hp的R2为0.485
-虽然看起来跟好但是更糟糕了
+虽然看起来跟好但是R2更糟糕了
 ```{r}
 lm(qsec~hp,mtcars) |> summary()
 plot(lm(qsec~hp,mtcars))
