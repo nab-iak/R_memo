@@ -7,7 +7,7 @@
 
 ## [/R_markdown](https://github.com/nab-iak/R_memo/tree/main/R_markdown)
 简单的笔记  
-.rmd格式
+.Rmd格式
 
 
 ![wife](https://cdn2.ettoday.net/images/6676/e6676531.jpg)
