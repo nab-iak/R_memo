@@ -7,7 +7,7 @@ $$
 
 
 ```{r}
-library(lpSolve)
+library(lpSolve) 
 f.obj <- c(5,7)
 f.con <- matrix(c(1,2,
                   2,3,
