@@ -11,6 +11,7 @@ df
 six_3 <- rep(666,n=ncol(df))
 ```
 转置df
+注意转置之后`class(df)`是matrix，所以在最后要用`data.frame(df)`给它变回来
 ```{r}
 df <- t(df)
 df
@@ -18,7 +19,8 @@ df
 
 ```{r}
 df <- cbind(df[,1:3],six_3) |> cbind(df[,4:ncol(df)])
-df <- t(df)
+df <- t(df) 
+df <- data.frame(df)
 df
 ```
 
