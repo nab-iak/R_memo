@@ -1,0 +1,26 @@
+思路为把行操作先转变为列操作，最后换成行
+
+以mtcars的数据为例
+```{r}
+df <- mtcars
+df
+```
+
+在Datsun 710[3]和Hornet 4 Drive[4]中间插入一个全是666的行，行名叫six_3
+```{r}
+six_3 <- rep(666,n=ncol(df))
+```
+转置df
+```{r}
+df <- t(df)
+df
+```
+
+```{r}
+df <- cbind(df[,1:3],six_3) |> cbind(df[,4:ncol(df)])
+df <- t(df)
+df
+```
+
+
+
