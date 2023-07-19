@@ -66,6 +66,7 @@ cor(mtcars[,c("qsec","drat","hp","mpg")])
 lm(qsec~drat+hp+mpg,mtcars) |> summary()
 lm(qsec~drat+hp+mpg,mtcars) |> car::vif()
 ```
+drat和qsec好像完全不想干
 ```{r}
 library(ggplot2)
 plot1 <- ggplot(mtcars) + geom_point(aes(drat,qsec)) 
@@ -73,11 +74,12 @@ plot2 <- ggplot(mtcars) + geom_point(aes(hp,qsec))
 plot3 <- ggplot(mtcars) + geom_point(aes(mpg,qsec)) 
 cowplot::plot_grid(plot1,plot2,plot3,nrow=2)
 ```
+看看存在一定共线性的模型拟合情况
 ```{r}
 plot(lm(qsec~drat+hp+disp+mpg,mtcars))
 ```
 
-
+看看去掉disp之后的拟合情况
 ```{r}
 plot(lm(qsec~drat+hp+mpg,mtcars))
 ```
