@@ -5,6 +5,7 @@ tb1 <- tibble::tibble(x=1:100,y=1:100,z=201:300)
 cor(tb1,method = "spearman")
 ggcorrplot::ggcorrplot(cor(tb1,method = "spearman"))
 lm(z~x+y,tb1) |> summary()
+lm(z~x+y,tb1) |> car::vif()
 ```
 
 ```{r}
@@ -19,6 +20,7 @@ tb3 <- tibble::tibble(x=1:100,y=c(1:50,50:1),z=201:300)
 cor(tb3,method = "spearman")
 ggcorrplot::ggcorrplot(cor(tb3,method = "spearman"))
 lm(z~x+y,tb3) |> summary()
+lm(z~x+y,tb3) |> car::vif()
 ```
 
 ```{r}
@@ -26,6 +28,7 @@ tb4 <- tibble::tibble(x=1:100,y1=c(1:50,50:1),y2=1:100,z=201:300)
 cor(tb4,method = "spearman")
 ggcorrplot::ggcorrplot(cor(tb4,method = "spearman"))
 lm(z~x+y1+y2,tb4) |> summary()
+lm(z~x+y1+y2,tb4) |> car::vif()
 ```
 
 ```{r}
@@ -41,3 +44,55 @@ cor(tb6,method = "spearman")
 ggcorrplot::ggcorrplot(cor(tb6,method = "spearman"))
 lm(z~x+y1+y2,tb4) |> summary()
 ```
+
+
+上面的例子不好，完全共线性会导致vif报错
+用mtcars尝试
+如果存在vif>10的话，存在共线性
+如果存在10>vif>5的话，酌情考虑一下
+从cor的结果来看，disp与其他3个变量都存在较强的相关性
+这个模型的R2为 0.5086 
+```{r}
+mtcars
+cor(mtcars[,c("qsec","drat","hp","disp","mpg")])
+lm(qsec~drat+hp+disp+mpg,mtcars) |> summary()
+lm(qsec~drat+hp+disp+mpg,mtcars) |> car::vif()
+```
+删除了disp后
+R2变为0.5251，较上一个模型更优
+```{r}
+mtcars
+cor(mtcars[,c("qsec","drat","hp","mpg")])
+lm(qsec~drat+hp+mpg,mtcars) |> summary()
+lm(qsec~drat+hp+mpg,mtcars) |> car::vif()
+```
+```{r}
+library(ggplot2)
+plot1 <- ggplot(mtcars) + geom_point(aes(drat,qsec)) 
+plot2 <- ggplot(mtcars) + geom_point(aes(hp,qsec)) 
+plot3 <- ggplot(mtcars) + geom_point(aes(mpg,qsec)) 
+cowplot::plot_grid(plot1,plot2,plot3,nrow=2)
+```
+```{r}
+plot(lm(qsec~drat+hp+disp+mpg,mtcars))
+```
+
+
+```{r}
+plot(lm(qsec~drat+hp+mpg,mtcars))
+```
+
+去掉draft后R2为 0.5134 
+反而下降了
+```{r}
+lm(qsec~hp+mpg,mtcars) |> summary()
+plot(lm(qsec~hp+mpg,mtcars))
+```
+只保留hp的R2为0.485
+虽然看起来跟好但是更糟糕了
+```{r}
+lm(qsec~hp,mtcars) |> summary()
+plot(lm(qsec~hp,mtcars))
+```
+```
+

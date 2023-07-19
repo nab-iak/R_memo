@@ -19,3 +19,5 @@ f.rhs <- c(16,9,8)
 lp('max', f.obj, f.con,f.dir,f.rhs)
 lp('max', f.obj, f.con,f.dir,f.rhs)$solution
 ```
+
+
