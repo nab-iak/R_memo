@@ -3,5 +3,5 @@
 .RData
 .Ruserdata
 .DS_Store
-
+.gitignore
 jupyter_notebook/.ipynb_checkpoints/Untitled-checkpoint.ipynb
