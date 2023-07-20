@@ -1,6 +1,8 @@
 # R_memo
 做一些memo，以后用的时候直接抄
 
+[toc]
+
 ## /data
 本repo中的[简单的练习数据集](https://github.com/nab-iak/R_memo/tree/main/data)  ßß
 来源：  
