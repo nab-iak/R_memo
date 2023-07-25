@@ -16,7 +16,6 @@
   - 复制github的.ipynb链接
   - 粘贴到搜索框里
   - Go!
--  施工中，以后就用jupyter了ßß
 
 ## ~~/R_markdown~~
 [简单的笔记](https://github.com/nab-iak/R_memo/tree/main/R_markdown)  
