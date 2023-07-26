@@ -20,6 +20,7 @@ M1的arm64系统在安装系统的时候不是每一个tool的可以直接在bio
 
 ## GSE
 [GSE166047](https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE166047)
+test1/data/GSE166047_RAW 为原始数据
 
 ## SRA
 SRR13615650
